@@ -7,8 +7,7 @@ cache:
     - "$HOME/.composer/cache"
     - "$HOME/.drush/cache"
 
-php:
-  - 7.1
+php: '7.1'
 
 env:
   - VERSION=HEAD
@@ -41,9 +40,11 @@ before_install:
   - export PATH="$ORCA/vendor/bin:$PATH"
   - export PATH="$ORCA_FIXTURE/vendor/bin:$PATH"
 
+  # Install ORCA and prepare the environment.
+  - git clone --branch master --depth 1 https://github.com/acquia/orca.git $ORCA
+  - $ORCA/bin/travis/before_install.sh
+
 install:
-  # Install ORCA so that we can build the fixture using that.
-  - git clone --depth 1 --branch v1.0.0-alpha11 https://github.com/acquia/orca.git ../orca
   - $ORCA/bin/travis/install.sh
 
   # Run ORCA static analysis tools.
